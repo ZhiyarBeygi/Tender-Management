@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Zhiyar\\Work\\Projects\\Main\\TenderManagement\\TenderManagement.csproj": {}
+    "E:\\Zhiyar\\Work\\Projects\\Main\\Replica\\TenderManagement\\TenderManagement.csproj": {}
   },
   "projects": {
-    "E:\\Zhiyar\\Work\\Projects\\Main\\TenderManagement\\TenderManagement.csproj": {
+    "E:\\Zhiyar\\Work\\Projects\\Main\\Replica\\TenderManagement\\TenderManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Zhiyar\\Work\\Projects\\Main\\TenderManagement\\TenderManagement.csproj",
+        "projectUniqueName": "E:\\Zhiyar\\Work\\Projects\\Main\\Replica\\TenderManagement\\TenderManagement.csproj",
         "projectName": "TenderManagement",
-        "projectPath": "E:\\Zhiyar\\Work\\Projects\\Main\\TenderManagement\\TenderManagement.csproj",
+        "projectPath": "E:\\Zhiyar\\Work\\Projects\\Main\\Replica\\TenderManagement\\TenderManagement.csproj",
         "packagesPath": "C:\\Users\\Delnia\\.nuget\\packages\\",
-        "outputPath": "E:\\Zhiyar\\Work\\Projects\\Main\\TenderManagement\\obj\\",
+        "outputPath": "E:\\Zhiyar\\Work\\Projects\\Main\\Replica\\TenderManagement\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Delnia\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,0 +1,9 @@
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.csproj.AssemblyReference.cache
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\rpswa.dswa.cache.json
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.GeneratedMSBuildEditorConfig.editorconfig
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.AssemblyInfoInputs.cache
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.AssemblyInfo.cs
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.csproj.CoreCompileInputs.cache
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.MvcApplicationPartsAssemblyInfo.cs
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.MvcApplicationPartsAssemblyInfo.cache
+E:\Zhiyar\Work\Projects\Main\Replica\obj\Debug\net10.0\TenderManagement.sourcelink.json

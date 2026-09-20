@@ -6,6 +6,17 @@ using TenderManagement.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// right after: var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // Vite's default port
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 builder.Services.AddScoped<SqlConnection>(sp =>
 {
@@ -21,6 +32,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+// right after: var app = builder.Build();
+app.UseCors("AllowFrontend"); // put this before app.UseHttpsRedirection();
 
 if (app.Environment.IsDevelopment())
 {
