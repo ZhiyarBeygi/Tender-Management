@@ -3,13 +3,30 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import AppLauncherPage from "../pages/AppLauncherPage/AppLauncherPage";
 import TenderListPage from "../pages/TenderListPage/TenderListPage";
 
+const LOGIN_PATH = "/";
+const LAUNCHER_PATH = "/applauncher";
+const TENDER_PATH = "/tendermenu";
+
+function getInitialPath() {
+  const path = window.location.pathname;
+
+  if (path === LAUNCHER_PATH || path === TENDER_PATH) {
+    return path;
+  }
+
+  return LOGIN_PATH;
+}
+
 export default function AppRoutes() {
-  const [path, setPath] = useState(window.location.pathname);
+  const [path, setPath] = useState(getInitialPath);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    sessionStorage.getItem("isLoggedIn") === "true",
+  );
 
   useEffect(() => {
-    const handlePopState = () => setPath(window.location.pathname);
-    window.addEventListener("popstate", handlePopState);
+    const handlePopState = () => setPath(getInitialPath());
 
+    window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
@@ -18,13 +35,35 @@ export default function AppRoutes() {
     setPath(to);
   }
 
-  if (path === "/tendermenu") {
-    return <TenderListPage onNavigate={navigate} />;
+  function handleLoginSuccess() {
+    sessionStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);
+    navigate(LAUNCHER_PATH);
   }
 
-  if (path === "/applauncher") {
-    return <AppLauncherPage onNavigate={navigate} />;
+  function handleLogout() {
+    sessionStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    navigate(LOGIN_PATH);
   }
 
-  return <LoginPage onLoginSuccess={() => navigate("/applauncher")} />;
+  if (!isLoggedIn) {
+    return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+  }
+
+  if (path === TENDER_PATH) {
+    return (
+      <TenderListPage
+        onNavigate={navigate}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
+  return (
+    <AppLauncherPage
+      onNavigate={navigate}
+      onLogout={handleLogout}
+    />
+  );
 }

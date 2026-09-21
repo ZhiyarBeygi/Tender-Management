@@ -1,19 +1,40 @@
-import "./TenderListPage.css";
+import ModuleSidebar from "../../components/ModuleSidebar";
+import SiteFooter from "../../components/SiteFooter";
+import SiteHeader from "../../components/SiteHeader";
 import TenderTable from "./components/TenderTable";
+import "./TenderListPage.css";
 
-export default function TenderListPage({ onNavigate }) {
+const modules = [
+  {
+    label: "مدیریت مناقصات",
+    path: "/tendermenu",
+  },
+];
+
+export default function TenderListPage({ onNavigate, onLogout }) {
   return (
-    <main className="tender-list-page" dir="rtl">
-      <header className="tender-list-header">
-        <h1>مدیریت مناقصات</h1>
-        <button type="button" onClick={() => onNavigate("/applauncher")}>
-          بازگشت
-        </button>
-      </header>
+    <div className="module-page" dir="rtl">
+      <SiteHeader
+        title="مدیریت مناقصات"
+        onBackToLauncher={() => onNavigate("/applauncher")}
+        onLogout={onLogout}
+      />
 
-      <section className="tender-list-content">
-        <TenderTable />
-      </section>
-    </main>
+      <div className="module-page-body">
+        <ModuleSidebar
+          modules={modules}
+          activeModule="/tendermenu"
+          onNavigate={onNavigate}
+        />
+
+        <main className="tender-list-main">
+          <section className="tender-list-content">
+            <TenderTable />
+          </section>
+        </main>
+      </div>
+
+      <SiteFooter />
+    </div>
   );
 }
