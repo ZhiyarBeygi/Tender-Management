@@ -1,0 +1,61 @@
+.app-launcher-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #182437;
+  font-family: IRANSans, Tahoma, Arial, sans-serif;
+  box-sizing: border-box;
+  padding: 32px;
+}
+
+.app-launcher-card {
+  width: min(900px, 100%);
+  padding: 36px;
+  border: 1px solid #3f4a5b;
+  border-radius: 16px;
+  background: #293446;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.app-launcher-card h1 {
+  margin: 0 0 32px;
+  color: #e2e8f0;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.app-launcher-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.app-card {
+  width: 180px;
+  height: 180px;
+  padding: 20px;
+  border: 2px solid #596273;
+  border-radius: 14px;
+  background: #394453;
+  color: #e2e8f0;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.app-card:hover {
+  transform: translateY(-4px);
+  background: #4b586c;
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 24px rgba(100, 116, 139, 0.3);
+}
+
+.app-card:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}

@@ -1,11 +1,5 @@
-import LoginPage from "./pages/LoginPage";
+import AppRoutes from "./routes/AppRoutes";
 
 export default function App() {
-  return (
-    <LoginPage
-      onLoginSuccess={() => {
-        window.location.href = "https://google.com";
-      }}
-    />
-  );
+  return <AppRoutes />;
 }
