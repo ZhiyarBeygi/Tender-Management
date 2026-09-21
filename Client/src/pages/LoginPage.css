@@ -24,7 +24,7 @@
   transition: transform 0.3s ease;
 }
 .login-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
 }
 .login-title { color: #e2e8f0; font-size: 26px; font-weight: 450; margin-bottom: 20px; }
 .login-divider { height: 1px; background: rgba(148,163,184,0.2); margin-bottom: 28px; }

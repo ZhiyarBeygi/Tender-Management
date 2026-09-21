@@ -27,6 +27,8 @@ builder.Services.AddScoped<SqlConnection>(sp =>
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITenderRepository, TenderRepository>();
+builder.Services.AddScoped<ITenderService, TenderService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

@@ -1,8 +1,7 @@
 namespace TenderManagement.DTOs;
 
-public class TenderDto
+public class TenderRequestDto
 {
-    public int Id { get; set; }
     public string TenderCode { get; set; } = "";
     public string Title { get; set; } = "";
     public string? CallNumber { get; set; }
@@ -16,19 +15,16 @@ public class TenderDto
     public string? WinnerName { get; set; }
     public decimal? Score { get; set; }
     public bool? IsRfqScoreObtained { get; set; }
+    public decimal? ProposedPrice { get; set; }
+    public decimal? MinQualitativeScore { get; set; }
     public bool? IsPartnershipPossible { get; set; }
     public bool? IsGuaranteeRequired { get; set; }
-    public bool? LedToContract { get; set; }
-
-    public decimal? ProposedPrice { get; set; }
     public decimal? GuaranteeAmount { get; set; }
     public decimal? GuaranteeAmountForeign { get; set; }
     public decimal? EmployerInitialEstimate { get; set; }
-    public decimal? MinQualitativeScore { get; set; }
     public decimal? TechnicalScoreCoefficient { get; set; }
     public decimal? MinTechnicalScore { get; set; }
 
-    public int? EnvelopeCount { get; set; }
     public string? Description { get; set; }
     public string? PartnershipLeader { get; set; }
     public string? CompanyName { get; set; }
@@ -44,9 +40,6 @@ public class TenderDto
     public string? TenderStatus { get; set; }
     public string? GuaranteeType { get; set; }
     public string? RecordStatus { get; set; }
-
-    public string? ComputedStatus { get; set; }
-    public int? DaysUntilDeadline { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? ModifiedAt { get; set; }
+    public int? EnvelopeCount { get; set; }
+    public bool? LedToContract { get; set; }
 }
