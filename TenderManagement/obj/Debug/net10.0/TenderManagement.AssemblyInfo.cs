@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TenderManagement")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78f85bad8f1c744a7559cbb7a36e2ed7fcc8079d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da5e0085b9310277c3ef43a0884c9119f1566eef")]
 [assembly: System.Reflection.AssemblyProductAttribute("TenderManagement")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TenderManagement")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

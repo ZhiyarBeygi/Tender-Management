@@ -30,15 +30,26 @@ public class TenderRepository : ITenderRepository
         await _connection.ExecuteScalarAsync<int>(
             "Tender_Insert", tender, commandType: CommandType.StoredProcedure);
 
-    public async Task<bool> Update(int id, TenderRequestDto tender)
-    {
-        var parameters = new DynamicParameters(tender);
-        parameters.Add("Id", id);
-        return await _connection.ExecuteAsync(
-            "Tender_Update", parameters, commandType: CommandType.StoredProcedure) > 0;
-    }
+public async Task<bool> Update(int id, TenderRequestDto tender)
+{
+    var parameters = new DynamicParameters(tender);
+    parameters.Add("Id", id);
 
-    public async Task<bool> Delete(int id) =>
-        await _connection.ExecuteAsync(
-            "Tender_Delete", new { Id = id }, commandType: CommandType.StoredProcedure) > 0;
+    var rowsAffected = await _connection.QuerySingleAsync<int>(
+        "Tender_Update",
+        parameters,
+        commandType: CommandType.StoredProcedure);
+
+    return rowsAffected > 0;
+}
+
+public async Task<bool> Delete(int id)
+{
+    var rowsAffected = await _connection.QuerySingleAsync<int>(
+        "Tender_Delete",
+        new { Id = id },
+        commandType: CommandType.StoredProcedure);
+
+    return rowsAffected > 0;
+}
 }
