@@ -19,7 +19,7 @@ export default function ParticlesBackground() {
       move: { enable: true, speed: 2.25, outModes: { default: "out" } },
       number: { value: 200, density: { enable: true, area: 900 } },
       opacity: { value: 0.1 },
-      size: { value: { min: 0.5, max: 2 }, color: "#969fab" },
+      size: { value: { min: 0.5, max: 3 }, color: "#969fab" },
     },
     detectRetina: true,
   }), []);

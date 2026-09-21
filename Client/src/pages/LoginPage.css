@@ -50,15 +50,45 @@
 }
 .login-error { color: #f87171; font-size: 13px; margin: -8px 0 14px; }
 .login-card button {
-  width: 100%; padding: 14px 14px 14px 14px; border: none; border-radius: 10px;
-  border: 2px solid #6c727e;
-  background: #2a3548;
-  color: #e2e8f0; font-weight: 600; font-size: 14px; cursor: pointer;
-  font-family: inherit;
-  background: #394453;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
-  transition: border-color 0.5s ease, box-shadow 0.5s ease, background 0.5s ease, transform 0.3s ease;  border-color: rgba(255, 255, 255, 0.6);
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #596273;
+    border-radius: 10px;
+
+    background: #293548;
+    color: #e2e8f0;
+
+    font-weight: 600;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        background 0.5s ease,
+        border-color 0.5s ease,
+        box-shadow 0.5s ease,
+        transform 0.3s ease;
 }
-.login-card button:hover { transform: translateY(-2px);}
-.login-card button:focus { background: rgba(30, 41, 59, 0.9)}
-.login-card button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.login-card button:hover {
+    background: #4b586c;
+    border-color: rgba(255, 255, 255, 0.85);
+
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.08),
+        0 8px 20px rgba(100, 116, 139, 0.3);
+
+    transform: translateY(-2px);
+}
+
+.login-card button:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 3px;
+}
+
+.login-card button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
