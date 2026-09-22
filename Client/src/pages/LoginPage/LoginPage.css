@@ -31,7 +31,7 @@
 .login-field { text-align: right; margin-bottom: 20px; }
 .login-field label { display: block; color: #cbd5e1; font-size: 15.2px; font-weight: 600; margin-bottom: 8px; }
 .login-field input {
-  width: 91%; padding: 10px 20px 10px 10px; border-radius: 10px;
+  width: 100%; padding: 10px 20px 10px 10px; border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: #394453; color: #e2e8f0; outline: none; font-size: 14px;
   font-family: inherit;

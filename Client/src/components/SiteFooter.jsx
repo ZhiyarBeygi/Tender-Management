@@ -2,14 +2,14 @@ import "./SiteFooter.css";
 
 export default function SiteFooter() {
   return (
-    <footer className="site-footer" dir="ltr">
-      <a
+    <footer className="site-footer" dir="ltr"  >
+      <a 
         href="https://tossam.com"
         target="_blank"
         rel="noreferrer"
         className="site-footer-link"
       >
-        tossam.com
+        شرکت توسم
       </a>
     </footer>
   );

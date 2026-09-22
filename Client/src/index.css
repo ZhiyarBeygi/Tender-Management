@@ -12,6 +12,37 @@
   font-style: normal;
 }
 
+:root {
+  --bg-main: #131e35;
+  --bg-header: #171b31;
+  --bg-sidebar: #10182a;
+  --bg-card: #293446;
+  --bg-input: #394453;
+
+  --border: #3f4a5b;
+
+  --text-main: #e2e8f0;
+  --text-secondary: #aeb9c9;
+
+  --primary: #1683ff;
+  --primary-hover: #0d70df;
+}
+
+[data-theme="light"] {
+  --bg-main: #f4f6fa;
+  --bg-header: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f1f4f8;
+
+  --border: #d6dce5;
+
+  --text-main: #1e293b;
+  --text-secondary: #64748b;
+
+  --primary: #1677e8;
+  --primary-hover: #0d63c5;
+}
 html,
 body,
 #root {
@@ -22,7 +53,7 @@ body,
 }
 
 html {
-  background: #182437;
+  background: var(--bg-card);
 }
 
 body {

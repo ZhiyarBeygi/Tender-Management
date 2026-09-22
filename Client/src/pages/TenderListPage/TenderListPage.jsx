@@ -1,40 +1,83 @@
-import ModuleSidebar from "../../components/ModuleSidebar";
-import SiteFooter from "../../components/SiteFooter";
-import SiteHeader from "../../components/SiteHeader";
+import { useState } from "react";
 import TenderTable from "./components/TenderTable";
 import "./TenderListPage.css";
 
-const modules = [
-  {
-    label: "مدیریت مناقصات",
-    path: "/tendermenu",
-  },
-];
+export default function TenderListPage({ onNavigate }) {
+  const [searchTerm, setSearchTerm] = useState("");
 
-export default function TenderListPage({ onNavigate, onLogout }) {
   return (
-    <div className="module-page" dir="rtl">
-      <SiteHeader
-        title="مدیریت مناقصات"
-        onBackToLauncher={() => onNavigate("/applauncher")}
-        onLogout={onLogout}
-      />
+    <section className="tender-list-page">
+      <div className="tender-list-page-topbar">
+        <h2 className="tender-list-title">لیست مناقصات</h2>
 
-      <div className="module-page-body">
-        <ModuleSidebar
-          modules={modules}
-          activeModule="/tendermenu"
-          onNavigate={onNavigate}
-        />
-
-        <main className="tender-list-main">
-          <section className="tender-list-content">
-            <TenderTable />
-          </section>
-        </main>
+        <button
+          type="button"
+          className="tender-list-back-button"
+          onClick={() => onNavigate("/")}
+        >
+          <span>بازگشت به انتخاب  ماژول</span>
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            aria-hidden="true"
+          >
+            <path
+              d="M9 5l7 7-7 7"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
 
-      <SiteFooter />
-    </div>
+      <section className="tender-list-content">
+        <div className="tender-list-toolbar">
+          <label className="tender-list-search-label" htmlFor="tender-search">
+            جستجوی مناقصات
+          </label>
+
+          <div className="tender-list-search-box">
+            <svg
+              className="tender-list-search-icon"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              aria-hidden="true"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="6.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              />
+              <path
+                d="M16 16l4 4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            <input
+              id="tender-search"
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="کد یا عنوان مناقصه را جستجو کنید..."
+              autoComplete="off"
+            />
+          </div>
+        </div>
+
+        <TenderTable searchTerm={searchTerm} />
+      </section>
+    </section>
   );
 }

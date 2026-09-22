@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import LoginPage from "../pages/LoginPage/LoginPage";
-import AppLauncherPage from "../pages/AppLauncherPage/AppLauncherPage";
+import HomePage from "../pages/HomePage/HomePage";
 import TenderListPage from "../pages/TenderListPage/TenderListPage";
+import MainLayout from "../layouts/MainLayout";
 
-const LOGIN_PATH = "/";
-const LAUNCHER_PATH = "/applauncher";
+const HOME_PATH = "/";
 const TENDER_PATH = "/tendermenu";
+
+// every entry here shows up as one row in the right-side panel;
+// add more modules to this list as new ones are built
+const modules = [
+  {
+    label: "مناقصه‌ها",
+    children: [{ label: "لیست مناقصه‌ها", path: TENDER_PATH }],
+  },
+];
 
 function getInitialPath() {
   const path = window.location.pathname;
-
-  if (path === LAUNCHER_PATH || path === TENDER_PATH) {
-    return path;
-  }
-
-  return LOGIN_PATH;
+  return path === TENDER_PATH ? path : HOME_PATH;
 }
 
 export default function AppRoutes() {
@@ -38,32 +42,34 @@ export default function AppRoutes() {
   function handleLoginSuccess() {
     sessionStorage.setItem("isLoggedIn", "true");
     setIsLoggedIn(true);
-    navigate(LAUNCHER_PATH);
+    navigate(HOME_PATH);
   }
 
   function handleLogout() {
     sessionStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
-    navigate(LOGIN_PATH);
+    navigate(HOME_PATH);
   }
 
   if (!isLoggedIn) {
     return <LoginPage onLoginSuccess={handleLoginSuccess} />;
   }
 
-  if (path === TENDER_PATH) {
-    return (
-      <TenderListPage
-        onNavigate={navigate}
-        onLogout={handleLogout}
-      />
-    );
-  }
+  const isTenderPath = path === TENDER_PATH;
 
   return (
-    <AppLauncherPage
+    <MainLayout
+      title={isTenderPath ? "مناقصه‌ها" : "مدیریت پروژه"}
+      modules={modules}
+      activePath={isTenderPath ? TENDER_PATH : null}
       onNavigate={navigate}
       onLogout={handleLogout}
-    />
+    >
+      {isTenderPath ? (
+        <TenderListPage onNavigate={navigate} />
+      ) : (
+        <HomePage onNavigate={navigate} />
+      )}
+    </MainLayout>
   );
 }

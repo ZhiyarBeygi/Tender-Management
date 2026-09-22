@@ -1,0 +1,43 @@
+.app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 190px;
+  height: 190px;
+  padding: 20px;
+  border: 2px solid #596273;
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: #e2e8f0;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease,
+    border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.app-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  color: #93c5fd;
+}
+
+.app-card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 24px rgba(100, 116, 139, 0.3);
+}
+
+.app-card:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
