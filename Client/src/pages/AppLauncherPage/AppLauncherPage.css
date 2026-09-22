@@ -2,9 +2,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #182437;
-  color: #e2e8f0;
+  background: var(--bg-main);
+  color: var(--text-main);
   font-family: IRANSans, Tahoma, Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-launcher-main {
@@ -18,18 +19,21 @@
 .app-launcher-card {
   width: min(900px, 100%);
   padding: 42px 36px;
-  border: 1px solid #3f4a5b;
+  border: 1px solid var(--border);
   border-radius: 16px;
-  background: #293446;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  background: var(--bg-card);
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.16);
   text-align: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, color 0.3s ease;
 }
 
 .app-launcher-card h2 {
   margin: 0 0 36px;
-  color: #e2e8f0;
+  color: var(--text-main);
   font-size: 28px;
   font-weight: 500;
+  transition: color 0.25s ease;
 }
 
 .app-launcher-grid {
@@ -37,33 +41,6 @@
   justify-content: center;
   gap: 24px;
   flex-wrap: wrap;
-}
-
-.app-card {
-  width: 190px;
-  height: 190px;
-  padding: 20px;
-  border: 2px solid #596273;
-  border-radius: 14px;
-  background: #394453;
-  color: #e2e8f0;
-  font: inherit;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.app-card:hover {
-  transform: translateY(-4px);
-  background: #4b586c;
-  border-color: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 10px 24px rgba(100, 116, 139, 0.3);
-}
-
-.app-card:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.8);
-  outline-offset: 3px;
 }
 
 @media (max-width: 640px) {

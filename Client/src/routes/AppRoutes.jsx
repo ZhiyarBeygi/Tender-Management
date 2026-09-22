@@ -2,36 +2,62 @@ import { useEffect, useState } from "react";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import HomePage from "../pages/HomePage/HomePage";
 import TenderListPage from "../pages/TenderListPage/TenderListPage";
+import BookmarksPage from "../pages/BookmarksPage/BookmarksPage";
 import MainLayout from "../layouts/MainLayout";
 
 const HOME_PATH = "/";
 const TENDER_PATH = "/tendermenu";
+const BOOKMARKS_PATH = "/bookmarks";
 
-// every entry here shows up as one row in the right-side panel;
-// add more modules to this list as new ones are built
 const modules = [
   {
     label: "مناقصه‌ها",
-    children: [{ label: "لیست مناقصه‌ها", path: TENDER_PATH }],
+    children: [
+      {
+        label: "لیست مناقصه‌ها",
+        path: TENDER_PATH,
+      },
+    ],
   },
 ];
 
 function getInitialPath() {
   const path = window.location.pathname;
-  return path === TENDER_PATH ? path : HOME_PATH;
+
+  if (path === TENDER_PATH) {
+    return TENDER_PATH;
+  }
+
+  if (path === BOOKMARKS_PATH) {
+    return BOOKMARKS_PATH;
+  }
+
+  return HOME_PATH;
 }
 
 export default function AppRoutes() {
   const [path, setPath] = useState(getInitialPath);
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     sessionStorage.getItem("isLoggedIn") === "true",
   );
 
   useEffect(() => {
-    const handlePopState = () => setPath(getInitialPath());
+    const handlePopState = () => {
+      setPath(getInitialPath());
+    };
 
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    window.addEventListener(
+      "popstate",
+      handlePopState,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        handlePopState,
+      );
+    };
   }, []);
 
   function navigate(to) {
@@ -52,23 +78,45 @@ export default function AppRoutes() {
   }
 
   if (!isLoggedIn) {
-    return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+    return (
+      <LoginPage
+        onLoginSuccess={handleLoginSuccess}
+      />
+    );
   }
 
   const isTenderPath = path === TENDER_PATH;
+  const isBookmarksPath = path === BOOKMARKS_PATH;
 
   return (
     <MainLayout
-      title={isTenderPath ? "مناقصه‌ها" : "مدیریت پروژه"}
+      title={
+        isTenderPath
+          ? "مناقصه‌ها"
+          : isBookmarksPath
+            ? "بوک‌مارک‌ها"
+            : "مدیریت پروژه"
+      }
       modules={modules}
-      activePath={isTenderPath ? TENDER_PATH : null}
+      activePath={
+        isTenderPath ? TENDER_PATH : null
+      }
       onNavigate={navigate}
       onLogout={handleLogout}
     >
       {isTenderPath ? (
-        <TenderListPage onNavigate={navigate} />
+        <TenderListPage
+          onNavigate={navigate}
+        />
+      ) : isBookmarksPath ? (
+        <BookmarksPage
+          modules={modules}
+          onNavigate={navigate}
+        />
       ) : (
-        <HomePage onNavigate={navigate} />
+        <HomePage
+          onNavigate={navigate}
+        />
       )}
     </MainLayout>
   );

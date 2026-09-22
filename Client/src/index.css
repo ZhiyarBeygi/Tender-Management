@@ -17,15 +17,21 @@
   --bg-header: #171b31;
   --bg-sidebar: #10182a;
   --bg-card: #293446;
+  --bg-card-alt: #202b3d;
   --bg-input: #394453;
 
   --border: #3f4a5b;
 
   --text-main: #e2e8f0;
   --text-secondary: #aeb9c9;
+  --text-muted: #7f8da3;
+  --text-strong: #f1f5f9;
 
   --primary: #1683ff;
   --primary-hover: #0d70df;
+
+  --sidebar-active-bg: #1d3150;
+  --sidebar-hover-bg: #1b2739;
 }
 
 [data-theme="light"] {
@@ -33,16 +39,23 @@
   --bg-header: #ffffff;
   --bg-sidebar: #ffffff;
   --bg-card: #ffffff;
-  --bg-input: #f1f4f8;
+  --bg-card-alt: #ffffff;
+  --bg-input: #ffffff;
 
   --border: #d6dce5;
 
   --text-main: #1e293b;
   --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-strong: #0f172a;
 
   --primary: #1677e8;
   --primary-hover: #0d63c5;
+
+  --sidebar-active-bg: #edf5ff;
+  --sidebar-hover-bg: #f5f8fc;
 }
+
 html,
 body,
 #root {
@@ -53,12 +66,16 @@ body,
 }
 
 html {
-  background: var(--bg-card);
+  background: var(--bg-main);
+  transition: background-color 0.3s ease;
 }
 
 body {
   min-height: 100vh;
+  background: var(--bg-main);
+  color: var(--text-main);
   font-family: "IRANSans", Tahoma, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button,

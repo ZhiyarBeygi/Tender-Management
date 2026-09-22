@@ -1,29 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ModuleSidebar.css";
 
-function GroupIcon() {
+function ModuleIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      aria-hidden="true"
+    >
       <path
-        d="M5 20h14M6 17h12M8 17l2-9h4l2 9M7 8h10l-2-3H9L7 8Z"
+        d="M14.5 4.5 19.5 9.5M13 6l5 5M9.5 10.5l-5 5 4 4 5-5M14 15l5-5M7 21l3.5-3.5"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <path
+        d="m16.5 3 4.5 4.5-2 2-4.5-4.5 2-2Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
 
-function ChildIcon() {
+function BookmarkIcon({ bookmarked }) {
   return (
-    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      width="17"
+      height="17"
+      aria-hidden="true"
+    >
       <path
-        d="m12 4 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L12 4Z"
-        fill="none"
+        d="M12 3.8l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8L12 3.8Z"
+        fill={bookmarked ? "currentColor" : "none"}
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.6"
         strokeLinejoin="round"
       />
     </svg>
@@ -33,7 +47,9 @@ function ChildIcon() {
 function Chevron({ open }) {
   return (
     <svg
-      className={`module-sidebar-chevron ${open ? "is-open" : ""}`}
+      className={`module-sidebar-chevron ${
+        open ? "is-open" : ""
+      }`}
       viewBox="0 0 24 24"
       width="15"
       height="15"
@@ -59,8 +75,29 @@ export default function ModuleSidebar({
   onToggleCollapse,
 }) {
   const [openGroups, setOpenGroups] = useState(() =>
-    Object.fromEntries(modules.map((module) => [module.label, true])),
+    Object.fromEntries(
+      modules.map((module) => [module.label, true]),
+    ),
   );
+
+  const [bookmarkedItems, setBookmarkedItems] = useState(() => {
+    try {
+      return (
+        JSON.parse(
+          localStorage.getItem("bookmarkedItems"),
+        ) || []
+      );
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "bookmarkedItems",
+      JSON.stringify(bookmarkedItems),
+    );
+  }, [bookmarkedItems]);
 
   function toggleGroup(label) {
     setOpenGroups((current) => ({
@@ -69,9 +106,19 @@ export default function ModuleSidebar({
     }));
   }
 
+  function toggleBookmark(path) {
+    setBookmarkedItems((current) =>
+      current.includes(path)
+        ? current.filter((item) => item !== path)
+        : [...current, path],
+    );
+  }
+
   return (
     <aside
-      className={`module-sidebar ${collapsed ? "is-collapsed" : ""}`}
+      className={`module-sidebar ${
+        collapsed ? "is-collapsed" : ""
+      }`}
       dir="rtl"
     >
       <div className="module-sidebar-heading">
@@ -82,19 +129,23 @@ export default function ModuleSidebar({
           className="module-sidebar-toggle"
           onClick={onToggleCollapse}
           aria-expanded={!collapsed}
-          aria-label={collapsed ? "باز کردن پنل منوها" : "بستن پنل منوها"}
+          aria-label={
+            collapsed
+              ? "باز کردن پنل منوها"
+              : "بستن پنل منوها"
+          }
         >
           <svg
             className={`module-sidebar-toggle-icon ${
               collapsed ? "is-collapsed" : ""
             }`}
             viewBox="0 0 24 24"
-            width="14"
-            height="14"
+            width="15"
+            height="15"
             aria-hidden="true"
           >
             <path
-              d="M15 6l-6 6 6 6"
+              d="m14 7-5 5 5 5"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -105,26 +156,35 @@ export default function ModuleSidebar({
         </button>
       </div>
 
-      <nav className="module-sidebar-nav" aria-label="منوهای در دسترس">
+      <nav
+        className="module-sidebar-nav"
+        aria-label="منوهای در دسترس"
+      >
         {modules.map((module) => {
           const isOpen = openGroups[module.label];
+
           const hasActiveChild = module.children?.some(
             (child) => child.path === activeModule,
           );
 
           return (
-            <div className="module-sidebar-group" key={module.label}>
+            <div
+              className="module-sidebar-group"
+              key={module.label}
+            >
               <button
                 type="button"
-                className={`module-sidebar-group-toggle ${
-                  hasActiveChild ? "has-active-child" : ""
+                className={`module-sidebar-group-main ${
+                  hasActiveChild
+                    ? "has-active-child"
+                    : ""
                 }`}
                 title={collapsed ? module.label : undefined}
                 onClick={() => toggleGroup(module.label)}
                 aria-expanded={!collapsed && isOpen}
               >
                 <span className="module-sidebar-group-icon">
-                  <GroupIcon />
+                  <ModuleIcon />
                 </span>
 
                 {!collapsed && (
@@ -133,28 +193,72 @@ export default function ModuleSidebar({
                   </span>
                 )}
 
-                {!collapsed && <Chevron open={isOpen} />}
+                {!collapsed && (
+                  <Chevron open={isOpen} />
+                )}
               </button>
 
-              {!collapsed && isOpen && module.children?.length > 0 && (
-                <div className="module-sidebar-children">
-                  {module.children.map((child) => (
-                    <button
-                      key={child.path}
-                      type="button"
-                      className={`module-sidebar-child ${
-                        child.path === activeModule ? "is-active" : ""
-                      }`}
-                      onClick={() => onNavigate(child.path)}
-                    >
-                      <span className="module-sidebar-child-icon">
-                        <ChildIcon />
-                      </span>
-                      <span>{child.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+              {!collapsed && module.children?.length > 0 && (
+                <div
+                  className={`module-sidebar-children ${
+                    isOpen ? "is-expanded" : "is-collapsed"
+                  }`}
+                >
+                  {module.children.map((child) => {
+                      const isBookmarked =
+                        bookmarkedItems.includes(child.path);
+
+                      const isActive =
+                        child.path === activeModule;
+
+                      return (
+                        <div
+                          key={child.path}
+                          className={`module-sidebar-item-row ${
+                            isActive ? "is-active" : ""
+                          }`}
+                        >
+                          <button
+                            type="button"
+                            className={`module-sidebar-bookmark-button ${
+                              isBookmarked
+                                ? "is-bookmarked"
+                                : ""
+                            }`}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              toggleBookmark(child.path);
+                            }}
+                            aria-label={
+                              isBookmarked
+                                ? `حذف بوک‌مارک ${child.label}`
+                                : `بوک‌مارک کردن ${child.label}`
+                            }
+                            title={
+                              isBookmarked
+                                ? "حذف بوک‌مارک"
+                                : "بوک‌مارک کردن"
+                            }
+                          >
+                            <BookmarkIcon
+                              bookmarked={isBookmarked}
+                            />
+                          </button>
+
+                          <button
+                            type="button"
+                            className="module-sidebar-item"
+                            onClick={() =>
+                              onNavigate(child.path)
+                            }
+                          >
+                            <span>{child.label}</span>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
             </div>
           );
         })}

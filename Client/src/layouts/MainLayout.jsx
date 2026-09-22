@@ -16,7 +16,11 @@ export default function MainLayout({
 
   return (
     <div className="app-layout" dir="rtl">
-      <SiteHeader title={title} onLogout={onLogout} />
+      <SiteHeader
+        title={title}
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+      />
 
       <div
         className={`app-layout-body ${

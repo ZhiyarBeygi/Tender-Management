@@ -3,6 +3,7 @@ import { ParticlesProvider } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import ParticlesBackground from "../../components/ParticlesBackground";
 import { login } from "../../api/authApi";
+import ThemeToggle from "../../components/ThemeToggle";
 import "./LoginPage.css";
 
 // defined outside the component so it's a stable reference across re-renders
@@ -32,6 +33,10 @@ export default function LoginPage({ onLoginSuccess }) {
 
   return (
     <div className="login-page">
+      <div className="login-theme-toggle">
+        <ThemeToggle />
+      </div>
+
       <ParticlesProvider init={particlesInit}>
         <ParticlesBackground />
       </ParticlesProvider>
