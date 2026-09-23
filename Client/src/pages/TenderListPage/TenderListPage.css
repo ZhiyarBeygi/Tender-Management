@@ -62,7 +62,7 @@
   background: var(--bg-card);
 
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 6px;
 
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
 
@@ -191,7 +191,7 @@
 .tender-table {
   width: 100%;
   min-width: 1300px;
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 0;
   table-layout: fixed;
   color: var(--text-main);
@@ -202,25 +202,17 @@
 .tender-table th,
 .tender-table td {
   padding: 13px 11px;
-  border-left: 1px solid var(--border-soft);
-  border-bottom: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   text-align: center;
   vertical-align: middle;
   line-height: 1.7;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-.tender-table th:first-child,
-.tender-table td:first-child {
-  border-right: 0;
-}
-
-.tender-table th:last-child,
-.tender-table td:last-child {
-  border-left: 0;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
 }
 
 .tender-table th {
@@ -228,13 +220,11 @@
   color: var(--text-strong);
   font-size: 14px;
   font-weight: 700;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .tender-table td {
   background: var(--bg-table-row);
   color: var(--text-main);
-  transition: color 0.25s ease, background-color 0.25s ease;
 }
 
 .tender-table tbody tr:nth-child(even) td {
@@ -243,10 +233,6 @@
 
 .tender-table tbody tr:hover td {
   background: var(--bg-hover);
-}
-
-.tender-table tbody tr:last-child td {
-  border-bottom: 0;
 }
 
 .tender-table-state {

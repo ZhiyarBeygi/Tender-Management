@@ -170,7 +170,7 @@ export default function ModuleSidebar({
           return (
             <div
               className="module-sidebar-group"
-              key={module.label}
+              key={module.id}
             >
               <button
                 type="button"
