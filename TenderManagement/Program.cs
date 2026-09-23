@@ -31,7 +31,7 @@ builder.Services.AddScoped<ITenderRepository, TenderRepository>();
 builder.Services.AddScoped<ITenderService, TenderService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -40,7 +40,8 @@ app.UseCors("AllowFrontend"); // put this before app.UseHttpsRedirection();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

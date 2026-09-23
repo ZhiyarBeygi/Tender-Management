@@ -52,22 +52,14 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-
   min-height: 320px;
-
   box-sizing: border-box;
-
   padding: 24px;
-
   background: var(--bg-card);
-
   border: 1px solid var(--border);
   border-radius: 6px;
-
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
-
   overflow: hidden;
-
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease,
@@ -82,6 +74,8 @@
   margin-bottom: 22px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border-soft);
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .tender-list-search-label {
@@ -90,6 +84,14 @@
   font-weight: 600;
   white-space: nowrap;
   transition: color 0.25s ease;
+}
+
+.tender-list-search-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .tender-list-search-box {
@@ -136,6 +138,49 @@
   cursor: pointer;
 }
 
+.tender-list-column-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.tender-list-column-button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, opacity 0.2s ease;
+}
+
+.tender-list-column-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.tender-list-column-button--primary {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+
+.tender-list-column-button--primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.tender-list-column-button--secondary {
+  border: 1px solid var(--border);
+  background: var(--bg-card-alt);
+  color: var(--text-secondary);
+}
+
+.tender-list-column-button--secondary:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--text-strong);
+}
+
 @media (max-width: 720px) {
   .tender-list-page-topbar,
   .tender-list-toolbar {
@@ -150,6 +195,12 @@
   .tender-list-search-box {
     width: 100%;
   }
+
+  .tender-list-search-group,
+  .tender-list-column-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 
 .tender-table-wrapper {
@@ -157,20 +208,15 @@
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
-
   overflow-x: auto;
   overflow-y: hidden;
-
   border: 1px solid var(--border-soft);
   border-radius: 10px;
-
   background: var(--bg-table);
   direction: rtl;
-
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
-
   scrollbar-width: thin;
   scrollbar-color: var(--primary) var(--bg-card-alt);
 }
@@ -199,6 +245,12 @@
   direction: rtl;
 }
 
+.tender-table--expanded {
+  table-layout: auto;
+  width: auto;
+  min-width: 100%;
+}
+
 .tender-table th,
 .tender-table td {
   padding: 13px 11px;
@@ -210,9 +262,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition:
+    width 0.25s ease,
     background-color 0.25s ease,
     border-color 0.25s ease,
     color 0.25s ease;
+}
+
+.tender-table--expanded th,
+.tender-table--expanded td {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: nowrap;
 }
 
 .tender-table th {

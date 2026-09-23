@@ -6,18 +6,70 @@ const columns = [
   { key: "title", label: "عنوان مناقصه", width: "240px" },
   { key: "callNumber", label: "شماره فراخوان", width: "185px" },
   { key: "documentsPublishDate", label: "تاریخ انتشار اسناد", width: "175px" },
-  {
-    key: "documentsSubmissionDeadline",
-    label: "آخرین مهلت تحویل اسناد",
-    width: "195px",
-  },
+  { key: "documentsSubmissionDeadline", label: "آخرین مهلت تحویل اسناد", width: "195px" },
   { key: "documentsReceiptDeadline", label: "مهلت دریافت اسناد", width: "175px" },
-  {
-    key: "qualitativeEvaluationDate",
-    label: "تاریخ اعلام نتایج ارزیابی کیفی",
-    width: "220px",
-  },
+  { key: "qualitativeEvaluationDate", label: "تاریخ اعلام نتایج ارزیابی کیفی", width: "220px" },
+  { key: "employerEvaluationDate", label: "تاریخ ارزیابی کارفرما", width: "175px" },
+  { key: "winnerName", label: "نام برنده", width: "160px" },
+  { key: "score", label: "امتیاز", width: "90px" },
+  { key: "isRfqScoreObtained", label: "کسب امتیاز ارزیابی کیفی", width: "170px" },
+  { key: "isPartnershipPossible", label: "امکان مشارکت", width: "120px" },
+  { key: "isGuaranteeRequired", label: "نیاز به ضمانت‌نامه", width: "150px" },
+  { key: "ledToContract", label: "منجر به قرارداد", width: "140px" },
+  { key: "proposedPrice", label: "مبلغ پیشنهادی", width: "150px" },
+  { key: "guaranteeAmount", label: "مبلغ ضمانت‌نامه", width: "150px" },
+  { key: "guaranteeAmountForeign", label: "مبلغ ضمانت‌نامه ارزی", width: "170px" },
+  { key: "employerInitialEstimate", label: "برآورد اولیه کارفرما", width: "170px" },
+  { key: "minQualitativeScore", label: "حداقل امتیاز کیفی", width: "150px" },
+  { key: "technicalScoreCoefficient", label: "ضریب امتیاز فنی", width: "140px" },
+  { key: "minTechnicalScore", label: "حداقل امتیاز فنی", width: "150px" },
+  { key: "envelopeCount", label: "تعداد پاکت‌ها", width: "120px" },
+  { key: "description", label: "توضیحات", width: "220px" },
+  { key: "partnershipLeader", label: "سرگروه مشارکت", width: "150px" },
+  { key: "companyName", label: "نام شرکت", width: "160px" },
+  { key: "employer", label: "کارفرما", width: "150px" },
+  { key: "city", label: "شهر", width: "100px" },
+  { key: "responsiblePerson", label: "مسئول پیگیری", width: "140px" },
+  { key: "documentSubmissionMethod", label: "روش تحویل اسناد", width: "160px" },
+  { key: "currencyUnit", label: "واحد پول", width: "100px" },
+  { key: "tenderType", label: "نوع مناقصه", width: "130px" },
+  { key: "creditType", label: "نوع اعتبار", width: "130px" },
+  { key: "tenderMethod", label: "روش برگزاری", width: "140px" },
+  { key: "tenderStatus", label: "وضعیت مناقصه", width: "120px" },
+  { key: "guaranteeType", label: "نوع ضمانت‌نامه", width: "150px" },
+  { key: "recordStatus", label: "وضعیت رکورد", width: "120px" },
+  { key: "createdAt", label: "تاریخ ثبت", width: "160px" },
+  { key: "modifiedAt", label: "تاریخ بروزرسانی", width: "160px" },
 ];
+
+const BOOLEAN_KEYS = new Set([
+  "isRfqScoreObtained",
+  "isPartnershipPossible",
+  "isGuaranteeRequired",
+  "ledToContract",
+]);
+
+const NUMBER_KEYS = new Set([
+  "score",
+  "proposedPrice",
+  "guaranteeAmount",
+  "guaranteeAmountForeign",
+  "employerInitialEstimate",
+  "minQualitativeScore",
+  "technicalScoreCoefficient",
+  "minTechnicalScore",
+  "envelopeCount",
+]);
+
+const DATE_KEYS = new Set([
+  "documentsPublishDate",
+  "documentsSubmissionDeadline",
+  "documentsReceiptDeadline",
+  "qualitativeEvaluationDate",
+  "employerEvaluationDate",
+  "createdAt",
+  "modifiedAt",
+]);
 
 function formatPersianDate(value) {
   if (!value) return "--";
@@ -33,14 +85,68 @@ function formatPersianDate(value) {
 }
 
 function getCellValue(tender, key) {
-  if (key.includes("Date") || key.includes("Deadline")) {
-    return formatPersianDate(tender[key]);
+  const value = tender[key];
+
+  if (DATE_KEYS.has(key)) {
+    return formatPersianDate(value);
   }
 
-  return tender[key] ?? "--";
+  if (BOOLEAN_KEYS.has(key)) {
+    if (value === null || value === undefined) return "--";
+    return value ? "بله" : "خیر";
+  }
+
+  if (NUMBER_KEYS.has(key)) {
+    if (value === null || value === undefined) return "--";
+    return Number(value).toLocaleString("en-US", { maximumFractionDigits: 2 });
+  }
+
+  return value ?? "--";
 }
 
-export default function TenderTable({ searchTerm = "" }) {
+// Measures the widest text needed per column so the "expanded" state
+// can use a real pixel width (required for the width to be transitionable).
+function useColumnAutoWidths(rows, active) {
+  const [widths, setWidths] = useState({});
+
+  useEffect(() => {
+    if (!active) return;
+
+    const measurer = document.createElement("span");
+    measurer.style.position = "fixed";
+    measurer.style.top = "-9999px";
+    measurer.style.visibility = "hidden";
+    measurer.style.whiteSpace = "nowrap";
+    measurer.style.fontSize = "14px";
+    measurer.style.fontWeight = "700";
+    measurer.style.fontFamily = getComputedStyle(document.body).fontFamily;
+    document.body.appendChild(measurer);
+
+    const next = {};
+
+    columns.forEach((column) => {
+      let max = 0;
+
+      measurer.textContent = column.label;
+      max = Math.max(max, measurer.offsetWidth);
+
+      rows.forEach((row) => {
+        measurer.textContent = String(getCellValue(row, column.key));
+        max = Math.max(max, measurer.offsetWidth);
+      });
+
+      // padding (11px each side) + border (1px each side) + a little breathing room
+      next[column.key] = `${max + 30}px`;
+    });
+
+    document.body.removeChild(measurer);
+    setWidths(next);
+  }, [active, rows]);
+
+  return widths;
+}
+
+export default function TenderTable({ searchTerm = "", columnsExpanded = false }) {
   const [tenders, setTenders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -93,6 +199,8 @@ export default function TenderTable({ searchTerm = "" }) {
     );
   }, [searchTerm, tenders]);
 
+  const autoWidths = useColumnAutoWidths(filteredTenders, columnsExpanded);
+
   if (loading) {
     return <div className="tender-table-state">در حال دریافت مناقصات...</div>;
   }
@@ -108,16 +216,18 @@ export default function TenderTable({ searchTerm = "" }) {
   return (
     <div className="tender-table-wrapper">
       <table className="tender-table">
-        <colgroup>
-          {columns.map((column) => (
-            <col key={column.key} style={{ width: column.width }} />
-          ))}
-        </colgroup>
-
         <thead>
           <tr>
             {columns.map((column) => (
-              <th key={column.key} scope="col">
+              <th
+                key={column.key}
+                scope="col"
+                style={{
+                  width: columnsExpanded
+                    ? autoWidths[column.key] || column.width
+                    : column.width,
+                }}
+              >
                 {column.label}
               </th>
             ))}
