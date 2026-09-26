@@ -31,11 +31,13 @@ export default function TenderListPage({ onNavigate }) {
       </div>
 
       <section className="tender-list-content">
-        <div className="tender-list-toolbar">
-          <div className="tender-list-search-group">
-            <label className="tender-list-search-label" htmlFor="tender-search">
+        <label className="tender-list-search-label" htmlFor="tender-search">
               جستجوی مناقصات
             </label>
+        <div className="tender-list-toolbar">
+          
+          <div className="tender-list-search-group">
+            
 
             <div className="tender-list-search-box">
               <svg

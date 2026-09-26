@@ -30,7 +30,7 @@
   gap: 8px;
   padding: 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 3px;
   background: var(--bg-card);
   color: var(--text-secondary);
   cursor: pointer;
@@ -57,7 +57,7 @@
   padding: 24px;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 3px;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
   overflow: hidden;
   transition:
@@ -80,14 +80,17 @@
 
 .tender-list-search-label {
   color: var(--text-main);
-  font-size: 15px;
-  font-weight: 600;
+  padding: 0px 20px 0px 0px;
+  font-size: 20px;
+  font-weight: 300;
   white-space: nowrap;
   transition: color 0.25s ease;
 }
 
 .tender-list-search-group {
   display: flex;
+  border: 1px var(--border);
+  margin: 10px 10px;
   align-items: center;
   gap: 14px;
   min-width: 0;
@@ -96,7 +99,7 @@
 
 .tender-list-search-box {
   position: relative;
-  width: min(460px, 100%);
+  width: min(450px, 100%);
 }
 
 .tender-list-search-icon {
@@ -113,8 +116,8 @@
   width: 100%;
   min-height: 44px;
   padding: 10px 44px 10px 14px;
-  border: 1px solid var(--border-soft);
-  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
   background: var(--bg-input);
   color: var(--text-main);
   outline: none;
@@ -147,7 +150,7 @@
 
 .tender-list-column-button {
   padding: 10px 16px;
-  border-radius: 8px;
+  border-radius: 3px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -211,7 +214,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   border: 1px solid var(--border-soft);
-  border-radius: 10px;
+  border-radius: 3px;
   background: var(--bg-table);
   direction: rtl;
   transition:
@@ -231,7 +234,7 @@
 
 .tender-table-wrapper::-webkit-scrollbar-thumb {
   background: var(--primary);
-  border-radius: 10px;
+  border-radius: 3px;
 }
 
 .tender-table {

@@ -1,12 +1,12 @@
 .site-header {
   min-height: 76px;
   display: flex;
+  border: 1px solid var(--border);
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   padding: 0 28px;
 
-  border-bottom: 1px solid var(--border-soft);
   background: var(--bg-header);
 
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
@@ -73,7 +73,6 @@
 .site-header-icon-button:hover {
   color: var(--text-main);
   background: var(--bg-card-alt);
-  border-color: var(--border-soft);
 }
 
 .site-header-icon-button:focus-visible {
@@ -168,7 +167,7 @@
   align-items: center;
   justify-content: center;
 
-  border-radius: 11px;
+  border-radius: 3px;
 
   background: var(--primary);
   color: #fff;

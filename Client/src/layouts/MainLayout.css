@@ -19,7 +19,7 @@
   min-width: 0;
 
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-columns: 250px minmax(0, 1fr);
 
   transition: grid-template-columns 0.25s ease;
 }
