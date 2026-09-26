@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getUserSettings, setTheme as saveTheme } from "../api/userSettingsApi.js";
 import "./ThemeToggle.css";
 
 const SunIcon = () => (
@@ -14,22 +15,62 @@ const MoonIcon = () => (
   </svg>
 );
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ currentUser }) {
   const [isLightMode, setIsLightMode] = useState(
-    () => localStorage.getItem("theme") === "light"
+    () => localStorage.getItem("theme") !== "dark",
   );
 
+  // Apply + cache locally on every change, so a reload paints the
+  // right theme instantly, before the server round trip below finishes.
   useEffect(() => {
     const theme = isLightMode ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [isLightMode]);
 
+  // Once we know who's logged in, fetch their saved preference and
+  // correct the local guess if it's different.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadSavedTheme() {
+      if (!currentUser?.userId) return;
+
+      try {
+        const settings = await getUserSettings(currentUser.userId);
+        if (!cancelled && settings?.theme) {
+          setIsLightMode(settings.theme === "light");
+        }
+      } catch {
+        // Keep whatever theme is already applied locally if this fails.
+      }
+    }
+
+    loadSavedTheme();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUser?.userId]);
+
+  async function handleToggle() {
+    const next = !isLightMode;
+    setIsLightMode(next);
+
+    if (currentUser?.userId) {
+      try {
+        await saveTheme(currentUser.userId, next ? "light" : "dark");
+      } catch {
+        // Non-critical — theme still applies locally even if the save fails.
+      }
+    }
+  }
+
   return (
     <button
       type="button"
       className="theme-toggle"
-      onClick={() => setIsLightMode((current) => !current)}
+      onClick={handleToggle}
       aria-label={isLightMode ? "فعال کردن حالت تاریک" : "فعال کردن حالت روشن"}
       title={isLightMode ? "حالت تاریک" : "حالت روشن"}
     >

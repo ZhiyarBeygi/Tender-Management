@@ -10,6 +10,7 @@ export default function MainLayout({
   activePath,
   onNavigate,
   onLogout,
+  currentUser,
   children,
 }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -20,19 +21,17 @@ export default function MainLayout({
         title={title}
         onNavigate={onNavigate}
         onLogout={onLogout}
+        currentUser={currentUser}
       />
 
-      <div
-        className={`app-layout-body ${
-          collapsed ? "is-panel-collapsed" : ""
-        }`}
-      >
+      <div className={`app-layout-body ${collapsed ? "is-panel-collapsed" : ""}`}>
         <ModuleSidebar
           modules={modules}
           activeModule={activePath}
           onNavigate={onNavigate}
           collapsed={collapsed}
           onToggleCollapse={() => setCollapsed((prev) => !prev)}
+          currentUser={currentUser}
         />
 
         <main className="app-layout-main">{children}</main>

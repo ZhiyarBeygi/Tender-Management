@@ -121,6 +121,7 @@ export default function SiteHeader({
   icon,
   onLogout,
   onNavigate,
+  currentUser,
 }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [createMenuOpen, setCreateMenuOpen] = useState(false);

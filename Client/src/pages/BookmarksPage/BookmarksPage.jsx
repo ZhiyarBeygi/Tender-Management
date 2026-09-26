@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getUserSettings, removeBookmark as removeBookmarkApi } from "../../api/userSettingsApi.js";
 import "./BookmarksPage.css";
 
 function BookmarkIcon() {
@@ -41,54 +42,75 @@ function TrashIcon() {
   );
 }
 
-export default function BookmarksPage({
-  modules,
-  onNavigate,
-}) {
+export default function BookmarksPage({ modules, onNavigate, currentUser }) {
   const [bookmarkedItems, setBookmarkedItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem("bookmarkedItems");
+    let cancelled = false;
 
-    try {
-      setBookmarkedItems(saved ? JSON.parse(saved) : []);
-    } catch {
-      setBookmarkedItems([]);
+    async function loadBookmarks() {
+      if (!currentUser?.userId) {
+        setBookmarkedItems([]);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const settings = await getUserSettings(currentUser.userId);
+        if (!cancelled) {
+          setBookmarkedItems(settings?.bookmarkedItems ?? []);
+        }
+      } catch {
+        if (!cancelled) {
+          setBookmarkedItems([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
     }
-  }, []);
+
+    loadBookmarks();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUser?.userId]);
 
   const bookmarkedModules = modules
     .flatMap((module) => module.children || [])
-    .filter((child) =>
-      bookmarkedItems.includes(child.path),
-    );
+    .filter((child) => bookmarkedItems.includes(child.path));
 
-  function removeBookmark(path) {
-    const updatedBookmarks = bookmarkedItems.filter(
-      (item) => item !== path,
-    );
+  async function removeBookmark(path) {
+    if (!currentUser?.userId) return;
 
-    setBookmarkedItems(updatedBookmarks);
+    setBookmarkedItems((current) => current.filter((item) => item !== path));
 
-    localStorage.setItem(
-      "bookmarkedItems",
-      JSON.stringify(updatedBookmarks),
+    try {
+      await removeBookmarkApi(currentUser.userId, path);
+    } catch {
+      setBookmarkedItems((current) => [...current, path]);
+    }
+  }
+
+  if (loading) {
+    return (
+      <section className="bookmarks-page" dir="rtl">
+        <p className="bookmarks-empty">در حال دریافت بوک‌مارک‌ها...</p>
+      </section>
     );
   }
 
   return (
     <section className="bookmarks-page" dir="rtl">
       {bookmarkedModules.length === 0 ? (
-        <p className="bookmarks-empty">
-          هنوز هیچ موردی بوک‌مارک نشده است.
-        </p>
+        <p className="bookmarks-empty">هنوز هیچ موردی بوک‌مارک نشده است.</p>
       ) : (
         <div className="bookmarks-list">
           {bookmarkedModules.map((item) => (
-            <div
-              key={item.path}
-              className="bookmark-item"
-            >
+            <div key={item.path} className="bookmark-item">
               <button
                 type="button"
                 className="bookmark-item-link"

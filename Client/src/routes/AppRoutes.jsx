@@ -12,6 +12,7 @@ const TENDER_PATH = "/tendermenu";
 const TENDER_DETAIL_PREFIX = `${TENDER_PATH}/`;
 const BOOKMARKS_PATH = "/bookmarks";
 const TEST_MODULE_PATH = "/testmodule";
+const CURRENT_USER_KEY = "currentUser";
 
 const modules = [
   {
@@ -66,28 +67,28 @@ function getInitialPath() {
   return HOME_PATH;
 }
 
+function getStoredUser() {
+  try {
+    const raw = sessionStorage.getItem(CURRENT_USER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function AppRoutes() {
   const [path, setPath] = useState(getInitialPath);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    sessionStorage.getItem("isLoggedIn") === "true",
-  );
+  const [currentUser, setCurrentUser] = useState(getStoredUser);
 
   useEffect(() => {
     const handlePopState = () => {
       setPath(getInitialPath());
     };
 
-    window.addEventListener(
-      "popstate",
-      handlePopState,
-    );
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      window.removeEventListener(
-        "popstate",
-        handlePopState,
-      );
+      window.removeEventListener("popstate", handlePopState);
     };
   }, []);
 
@@ -96,19 +97,28 @@ export default function AppRoutes() {
     setPath(to);
   }
 
-  function handleLoginSuccess() {
-    sessionStorage.setItem("isLoggedIn", "true");
-    setIsLoggedIn(true);
+  function handleLoginSuccess(result) {
+    const user = {
+      userId: result.userId,
+      username: result.username,
+    };
+
+    sessionStorage.setItem(
+      CURRENT_USER_KEY,
+      JSON.stringify(user),
+    );
+
+    setCurrentUser(user);
     navigate(HOME_PATH);
   }
 
   function handleLogout() {
-    sessionStorage.removeItem("isLoggedIn");
-    setIsLoggedIn(false);
+    sessionStorage.removeItem(CURRENT_USER_KEY);
+    setCurrentUser(null);
     navigate(HOME_PATH);
   }
 
-  if (!isLoggedIn) {
+  if (!currentUser) {
     return (
       <LoginPage
         onLoginSuccess={handleLoginSuccess}
@@ -123,37 +133,42 @@ export default function AppRoutes() {
   const isTestModulePath = path === TEST_MODULE_PATH;
 
   return (
-      <MainLayout
-        title={
-          isTenderDetailPath
-            ? "مشاهده مناقصه"
-            : isTenderPath
-              ? "مناقصه‌ها"
-              : isBookmarksPath
-                ? "بوک‌مارک‌ها"
-                : isTestModulePath
-                  ? "ماژول جدید"
-                  : "مدیریت پروژه"
-        }
-        modules={modules}
-        activePath={
-          isTenderPath || isTenderDetailPath
-            ? TENDER_PATH
-            : isTestModulePath
-              ? TEST_MODULE_PATH
-              : null
-        }
-        onNavigate={navigate}
-        onLogout={handleLogout}
-      >
+    <MainLayout
+      title={
+        isTenderDetailPath
+          ? "مشاهده مناقصه"
+          : isTenderPath
+            ? "مناقصه‌ها"
+            : isBookmarksPath
+              ? "بوک‌مارک‌ها"
+              : isTestModulePath
+                ? "ماژول جدید"
+                : "مدیریت پروژه"
+      }
+      modules={modules}
+      activePath={
+        isTenderPath || isTenderDetailPath
+          ? TENDER_PATH
+          : isTestModulePath
+            ? TEST_MODULE_PATH
+            : null
+      }
+      onNavigate={navigate}
+      onLogout={handleLogout}
+      currentUser={currentUser}
+    >
       {isTenderDetailPath ? (
-        <TenderDetailPage tenderId={tenderId} onNavigate={navigate} />
+        <TenderDetailPage
+          tenderId={tenderId}
+          onNavigate={navigate}
+        />
       ) : isTenderPath ? (
         <TenderListPage onNavigate={navigate} />
       ) : isBookmarksPath ? (
         <BookmarksPage
           modules={modules}
           onNavigate={navigate}
+          currentUser={currentUser}
         />
       ) : isTestModulePath ? (
         <TestModulePage />
