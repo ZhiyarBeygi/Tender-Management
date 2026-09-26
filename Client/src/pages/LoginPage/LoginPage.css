@@ -78,7 +78,7 @@
 
   border: 1px solid rgba(15, 23, 42, 0.12);
 
-  background: #f1f4f8;
+  background: rgba(255, 255, 255, 0.08);
   color: #1e293b;
 
   outline: none;
@@ -94,19 +94,20 @@
 .login-field input:focus {
   border-color: rgba(15, 23, 42, 0.45);
 
+  background: rgba(255, 255, 255, 0.08);
+
   outline: none;
 
-  box-shadow:
-    0 0 0 2px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 0 0 2px rgba(51, 108, 243, 0.749);
+
 }
 
 .login-field input:hover {
   border-color: rgba(15, 23, 42, 0.6);
 
-  background: #f1f4f8;
+  background: rgba(255, 255, 255, 0.08);
 
-  box-shadow:
-    0 0 0 2px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 0 0 2px rgba(51, 108, 243, 0.749);
 }
 .login-error {
   color: var(--danger);

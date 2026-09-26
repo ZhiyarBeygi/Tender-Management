@@ -22,10 +22,10 @@ function HomeIcon() {
   );
 }
 
-function ChevronIcon({ open }) {
+function ChevronIcon({ open, className = "" }) {
   return (
     <svg
-      className={`site-header-user-chevron ${open ? "is-open" : ""}`}
+      className={`${className} ${open ? "is-open" : ""}`}
       viewBox="0 0 24 24"
       width="17"
       height="17"
@@ -79,6 +79,43 @@ function LogoutIcon() {
   );
 }
 
+function PlusIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+function TenderCreateIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3.5" y="7.5" width="17" height="12" rx="2" />
+      <path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" />
+      <path d="M3.5 12.5h17" />
+    </svg>
+  );
+}
+
 export default function SiteHeader({
   title,
   icon,
@@ -86,7 +123,9 @@ export default function SiteHeader({
   onNavigate,
 }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [createMenuOpen, setCreateMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
+  const createMenuRef = useRef(null);
 
   useEffect(() => {
     function handleOutsideClick(event) {
@@ -95,6 +134,13 @@ export default function SiteHeader({
         !userMenuRef.current.contains(event.target)
       ) {
         setUserMenuOpen(false);
+      }
+
+      if (
+        createMenuRef.current &&
+        !createMenuRef.current.contains(event.target)
+      ) {
+        setCreateMenuOpen(false);
       }
     }
 
@@ -120,6 +166,21 @@ export default function SiteHeader({
     onLogout?.();
   }
 
+  function toggleCreateMenu() {
+    setUserMenuOpen(false);
+    setCreateMenuOpen((current) => !current);
+  }
+
+  function toggleUserMenu() {
+    setCreateMenuOpen(false);
+    setUserMenuOpen((current) => !current);
+  }
+
+  function handleCreateTender() {
+    setCreateMenuOpen(false);
+    onNavigate?.("/tendermenu");
+  }
+
   return (
     <header className="site-header" dir="rtl">
       <div className="site-header-title">
@@ -133,6 +194,61 @@ export default function SiteHeader({
       </div>
 
       <div className="site-header-actions">
+        <div
+          className="site-header-create-wrapper"
+          ref={createMenuRef}
+        >
+          <button
+            type="button"
+            className="site-header-create-button"
+            onClick={toggleCreateMenu}
+            aria-expanded={createMenuOpen}
+            aria-haspopup="menu"
+          >
+            <span className="site-header-create-button-plus">
+              <PlusIcon />
+            </span>
+            <span>ایجاد</span>
+            <ChevronIcon
+              open={createMenuOpen}
+              className="site-header-create-chevron"
+            />
+          </button>
+
+          {createMenuOpen && (
+            <div
+              className="site-header-create-menu"
+              role="menu"
+            >
+              <div className="site-header-create-menu-heading">
+                ایجاد سریع
+              </div>
+
+              <button
+                type="button"
+                className="site-header-create-item"
+                onClick={handleCreateTender}
+                role="menuitem"
+              >
+                <span className="site-header-create-item-icon">
+                  <TenderCreateIcon />
+                </span>
+
+                <span className="site-header-create-item-text">
+                  <span className="site-header-create-item-title">
+                    مناقصه جدید
+                  </span>
+                  <span className="site-header-create-item-desc">
+                    ورود به فهرست مناقصات
+                  </span>
+                </span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <span className="site-header-divider" aria-hidden="true" />
+
         <button
           type="button"
           className="site-header-icon-button"
@@ -152,13 +268,11 @@ export default function SiteHeader({
           <button
             type="button"
             className="site-header-user"
-            onClick={() =>
-              setUserMenuOpen((current) => !current)
-            }
+            onClick={toggleUserMenu}
             aria-expanded={userMenuOpen}
             aria-haspopup="menu"
           >
-            <ChevronIcon open={userMenuOpen} />
+            <ChevronIcon open={userMenuOpen} className="site-header-user-chevron" />
 
             <span className="site-header-user-info">
               <span className="site-header-user-label">

@@ -310,3 +310,148 @@
     gap: 7px;
   }
 }
+.site-header-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background-color 0.25s ease;
+}
+
+.site-header-create-wrapper {
+  position: relative;
+}
+
+.site-header-create-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  height: 40px;
+  padding: 0 15px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: var(--primary);
+  color: #fff;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+
+.site-header-create-button:hover {
+  filter: brightness(1.06);
+}
+
+.site-header-create-button:active {
+  transform: scale(0.97);
+}
+
+.site-header-create-button-plus {
+  display: flex;
+  align-items: center;
+}
+
+.site-header-create-chevron {
+  color: #fff;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.site-header-create-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.site-header-create-menu {
+  position: absolute;
+
+  top: calc(100% + 9px);
+  right: 0;
+
+  width: 260px;
+
+  padding: 8px;
+
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+
+  background: var(--bg-header);
+
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.14),
+    0 4px 10px rgba(15, 23, 42, 0.06);
+
+  z-index: 1000;
+
+  animation: site-header-menu-enter 0.16s ease-out;
+}
+
+.site-header-create-menu-heading {
+  padding: 4px 8px 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.site-header-create-item {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 10px 8px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  text-align: right;
+  font: inherit;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.site-header-create-item:hover {
+  background: var(--bg-card-alt);
+}
+
+.site-header-create-item-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: rgba(230, 126, 34, 0.15);
+  color: #e67e22;
+}
+
+.site-header-create-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.site-header-create-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.site-header-create-item-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
