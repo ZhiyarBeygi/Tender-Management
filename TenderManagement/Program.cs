@@ -26,10 +26,13 @@ builder.Services.AddScoped<SqlConnection>(sp =>
     );
 });
 
+builder.Services.AddScoped<IUserSettingsRepository, UserSettingsRepository>();
+builder.Services.AddScoped<IUserSettingsService, UserSettingsService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITenderRepository, TenderRepository>();
 builder.Services.AddScoped<ITenderService, TenderService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
