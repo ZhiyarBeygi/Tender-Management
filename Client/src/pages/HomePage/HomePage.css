@@ -7,10 +7,10 @@
 
 .home-launcher-title {
   padding: 0px 0px 14px;
-  margin: 0 0 14px;
+  margin: 14px 20px 20px ;
   border-bottom: 1px solid var(--border);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 250;
   color: var(--text-main);
   transition: color 0.25s ease, border-color 0.25s ease;
 }
