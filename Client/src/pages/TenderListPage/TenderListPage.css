@@ -237,6 +237,68 @@
   border-radius: 3px;
 }
 
+.tender-list-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  background: rgba(56, 189, 178, 0.12);
+  border: 1px solid rgba(56, 189, 178, 0.4);
+  color: #0f5c56;
+  font-size: 14px;
+  direction: rtl;
+}
+
+:root[data-theme="dark"] .tender-list-notice {
+  background: rgba(56, 189, 178, 0.1);
+  border-color: rgba(56, 189, 178, 0.3);
+  color: #7fdcd3;
+}
+
+.tender-list-notice-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tender-list-notice-icon {
+  font-size: 16px;
+}
+
+.tender-list-notice-close-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tender-list-notice-dismiss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.tender-list-notice-dismiss:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
 .tender-table {
   width: 100%;
   min-width: 1300px;
@@ -249,7 +311,7 @@
 }
 
 .tender-table--expanded {
-  table-layout: auto;
+  table-layout: fixed;
   width: auto;
   min-width: 100%;
 }
@@ -294,10 +356,14 @@
   background: var(--bg-table-row-alt);
 }
 
-.tender-table tbody tr:hover td {
-  background: var(--bg-hover);
+.tender-table tbody tr {
+  cursor: pointer;
 }
 
+.tender-table tbody tr:hover td {
+  background: var(--bg-hover);
+  transition: background-color 0.15s ease;
+}
 .tender-table-state {
   min-height: 180px;
   display: flex;

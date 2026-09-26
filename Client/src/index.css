@@ -24,11 +24,13 @@
 
   --text-main: #e2e8f0;
   --text-secondary: #aeb9c9;
-  --text-muted: #7f8da3;
+  --text-muted: #9eabc1;
   --text-strong: #f1f5f9;
 
   --primary: #1683ff;
   --primary-hover: #0d70df;
+  --bg-hover: #232a45;
+
 
   --sidebar-active-bg: #1d3150;
   --sidebar-hover-bg: #1b2739;
@@ -39,14 +41,15 @@
   --bg-header: #ffffff;
   --bg-sidebar: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-alt: #ffffff;
+  --bg-card-alt: #ececec;
   --bg-input: #ffffff;
+  --bg-hover: #eef1f6;
 
-  --border: #d6dce5;
+  --border: #cad1da;
 
   --text-main: #1e293b;
   --text-secondary: #64748b;
-  --text-muted: #94a3b8;
+  --text-muted: #5c636c;
   --text-strong: #0f172a;
 
   --primary: #1677e8;

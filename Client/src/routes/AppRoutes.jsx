@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import HomePage from "../pages/HomePage/HomePage";
 import TenderListPage from "../pages/TenderListPage/TenderListPage";
+import TenderDetailPage from "../pages/TenderListPage/TenderDetail/TenderDetailPage";
 import BookmarksPage from "../pages/BookmarksPage/BookmarksPage";
 import TestModulePage from "../pages/TestModulePage/TestModulePage";
 import MainLayout from "../layouts/MainLayout";
 
 const HOME_PATH = "/";
 const TENDER_PATH = "/tendermenu";
+const TENDER_DETAIL_PREFIX = `${TENDER_PATH}/`;
 const BOOKMARKS_PATH = "/bookmarks";
 const TEST_MODULE_PATH = "/testmodule";
 
@@ -34,6 +36,14 @@ const modules = [
   },
 ];
 
+function getTenderIdFromPath(path) {
+  if (path.startsWith(TENDER_DETAIL_PREFIX)) {
+    return path.slice(TENDER_DETAIL_PREFIX.length) || null;
+  }
+
+  return null;
+}
+
 function getInitialPath() {
   const path = window.location.pathname;
 
@@ -41,11 +51,15 @@ function getInitialPath() {
     return TENDER_PATH;
   }
 
+  if (getTenderIdFromPath(path)) {
+    return path;
+  }
+
   if (path === BOOKMARKS_PATH) {
     return BOOKMARKS_PATH;
   }
-  
-  if (path === TEST_MODULE_PATH){
+
+  if (path === TEST_MODULE_PATH) {
     return TEST_MODULE_PATH;
   }
 
@@ -102,23 +116,28 @@ export default function AppRoutes() {
     );
   }
 
+  const tenderId = getTenderIdFromPath(path);
+  const isTenderDetailPath = tenderId !== null;
   const isTenderPath = path === TENDER_PATH;
   const isBookmarksPath = path === BOOKMARKS_PATH;
   const isTestModulePath = path === TEST_MODULE_PATH;
+
   return (
       <MainLayout
         title={
-          isTenderPath
-            ? "مناقصه‌ها"
-            : isBookmarksPath
-              ? "بوک‌مارک‌ها"
-              : isTestModulePath
-                ? "ماژول جدید"
-                : "مدیریت پروژه"
+          isTenderDetailPath
+            ? "مشاهده مناقصه"
+            : isTenderPath
+              ? "مناقصه‌ها"
+              : isBookmarksPath
+                ? "بوک‌مارک‌ها"
+                : isTestModulePath
+                  ? "ماژول جدید"
+                  : "مدیریت پروژه"
         }
         modules={modules}
         activePath={
-          isTenderPath
+          isTenderPath || isTenderDetailPath
             ? TENDER_PATH
             : isTestModulePath
               ? TEST_MODULE_PATH
@@ -127,7 +146,9 @@ export default function AppRoutes() {
         onNavigate={navigate}
         onLogout={handleLogout}
       >
-      {isTenderPath ? (
+      {isTenderDetailPath ? (
+        <TenderDetailPage tenderId={tenderId} onNavigate={navigate} />
+      ) : isTenderPath ? (
         <TenderListPage onNavigate={navigate} />
       ) : isBookmarksPath ? (
         <BookmarksPage

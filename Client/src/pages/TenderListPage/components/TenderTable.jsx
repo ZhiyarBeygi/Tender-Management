@@ -105,7 +105,7 @@ function getCellValue(tender, key) {
 }
 
 // Measures the widest text needed per column so the "expanded" state
-// can use a real pixel width (required for the width to be transitionable).
+// can use a real pixel width (required for width to be transitionable).
 function useColumnAutoWidths(rows, active) {
   const [widths, setWidths] = useState({});
 
@@ -135,7 +135,6 @@ function useColumnAutoWidths(rows, active) {
         max = Math.max(max, measurer.offsetWidth);
       });
 
-      // padding (11px each side) + border (1px each side) + a little breathing room
       next[column.key] = `${max + 30}px`;
     });
 
@@ -146,7 +145,7 @@ function useColumnAutoWidths(rows, active) {
   return widths;
 }
 
-export default function TenderTable({ searchTerm = "", columnsExpanded = false }) {
+export default function TenderTable({ searchTerm = "", columnsExpanded = false, onRowDoubleClick }) {
   const [tenders, setTenders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -236,7 +235,7 @@ export default function TenderTable({ searchTerm = "", columnsExpanded = false }
 
         <tbody>
           {filteredTenders.map((tender) => (
-            <tr key={tender.id}>
+            <tr key={tender.id} onDoubleClick={() => onRowDoubleClick?.(tender)}>
               {columns.map((column) => (
                 <td key={column.key} title={String(getCellValue(tender, column.key))}>
                   {getCellValue(tender, column.key)}

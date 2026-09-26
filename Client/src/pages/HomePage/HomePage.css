@@ -6,12 +6,13 @@
 }
 
 .home-launcher-title {
-  padding: 0px 0px 10px;
-  margin: 0;
+  padding: 0px 0px 14px;
+  margin: 0 0 14px;
+  border-bottom: 1px solid var(--border);
   font-size: 24px;
   font-weight: 600;
   color: var(--text-main);
-  transition: color 0.25s ease;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .home-launcher-grid {

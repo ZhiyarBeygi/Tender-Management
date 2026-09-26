@@ -5,6 +5,15 @@ import "./TenderListPage.css";
 export default function TenderListPage({ onNavigate }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [columnsExpanded, setColumnsExpanded] = useState(false);
+  const [noticeDismissed, setNoticeDismissed] = useState(false);
+
+  function handleRowDoubleClick(tender) {
+    onNavigate(`/tendermenu/${tender.id}`);
+  }
+
+  function dismissNotice() {
+    setNoticeDismissed(true);
+  }
 
   return (
     <section className="tender-list-page">
@@ -32,13 +41,11 @@ export default function TenderListPage({ onNavigate }) {
 
       <section className="tender-list-content">
         <label className="tender-list-search-label" htmlFor="tender-search">
-              جستجوی مناقصات
-            </label>
-        <div className="tender-list-toolbar">
-          
-          <div className="tender-list-search-group">
-            
+          جستجوی مناقصات
+        </label>
 
+        <div className="tender-list-toolbar">
+          <div className="tender-list-search-group">
             <div className="tender-list-search-box">
               <svg
                 className="tender-list-search-icon"
@@ -83,7 +90,48 @@ export default function TenderListPage({ onNavigate }) {
           </div>
         </div>
 
-        <TenderTable searchTerm={searchTerm} columnsExpanded={columnsExpanded} />
+        {!noticeDismissed && (
+          <div className="tender-list-notice">
+            <div className="tender-list-notice-content">
+              <span className="tender-list-notice-icon" aria-hidden="true">
+                💡
+              </span>
+              <span>
+                توجه: برای مشاهده جزئیات هر مناقصه، روی آن دوبار کلیک کنید
+              </span>
+              <button
+                type="button"
+                className="tender-list-notice-close-link"
+                onClick={dismissNotice}
+              >
+                بستن
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className="tender-list-notice-dismiss"
+              onClick={dismissNotice}
+              aria-label="بستن اعلان"
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        <TenderTable
+          searchTerm={searchTerm}
+          columnsExpanded={columnsExpanded}
+          onRowDoubleClick={handleRowDoubleClick}
+        />
       </section>
     </section>
   );
